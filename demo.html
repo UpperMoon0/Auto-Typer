@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Typer Demo - Input Fields</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .demo-section {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        .paste-blocked {
+            background: #ffe6e6;
+            border: 1px solid #ff9999;
+        }
+
+        .instructions {
+            background: #e6f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎯 Auto-Typer Visual Selector Demo</h1>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Copy some text to your clipboard</li>
+            <li>Run the Auto-Typer script: <code>py auto_typer.py</code></li>
+            <li>Enter this page URL or press Enter to use current page</li>
+            <li>Choose option <strong>6 - Visual Selector</strong></li>
+            <li>Watch as all input fields get highlighted with red borders and numbers!</li>
+            <li>Simply enter the number of the field you want to type into</li>
+        </ol>
+    </div>
+
+    <div class="demo-section">
+        <h2>Login Form Example</h2>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter your password"
+                class="paste-blocked">
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>Contact Form Example</h2>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
+        </div>
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" placeholder="Enter your message here..."
+                class="paste-blocked"></textarea>
+        </div>
+    </div>
+
+    <div class="demo-section">
+        <h2>Search Examples</h2>
+        <div class="form-group">
+            <label for="search1">Site Search:</label>
+            <input type="search" id="search1" name="search1" placeholder="Search our website...">
+        </div>
+        <div class="form-group">
+            <label for="search2">URL Search:</label>
+            <input type="url" id="search2" name="search2" placeholder="Enter a website URL">
+        </div>
+        <div class="form-group">
+            <label for="number">Number Input:</label>
+            <input type="number" id="number" name="number" placeholder="Enter a number">
+        </div>
+    </div>
+
+    <script>
+        // Simulate paste blocking on certain fields
+        document.querySelectorAll('.paste-blocked').forEach(field => {
+            field.addEventListener('paste', function (e) {
+                e.preventDefault();
+                alert('Paste is blocked on this field! Use Auto-Typer to bypass this restriction.');
+            });
+        });
+
+        // Add some visual feedback
+        document.querySelectorAll('input, textarea').forEach(field => {
+            field.addEventListener('focus', function () {
+                this.style.boxShadow = '0 0 5px #007bff';
+            });
+            field.addEventListener('blur', function () {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>

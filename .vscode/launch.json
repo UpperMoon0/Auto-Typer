@@ -8,25 +8,7 @@
             "program": "${workspaceFolder}/auto_typer.py",
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
-            "env": {},
-            "args": [],
-            "stopOnEntry": false,
             "justMyCode": true
-        },
-        {
-            "name": "Debug Auto-Typer",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/auto_typer.py",
-            "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}",
-            "env": {},
-            "args": [],
-            "stopOnEntry": false,
-            "justMyCode": false,
-            "debugOptions": [
-                "RedirectOutput"
-            ]
         }
     ]
 }

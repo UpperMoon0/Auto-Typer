@@ -2,14 +2,18 @@ import pyperclip
 import time
 import keyboard
 import pyautogui
-from threading import Thread
-import sys
 import re
+try:
+    from pynput.keyboard import Controller as KeyboardController
+    PYNPUT_AVAILABLE = True
+except ImportError:
+    PYNPUT_AVAILABLE = False
+    print("⚠️  pynput not available. Install with: pip install pynput")
 
 class SimpleAutoTyper:
     def __init__(self):
         self.running = True
-        self.typing_speed = 0.05  # Default typing delay
+        self.typing_speed = 0.01
         print("=" * 60)
         print("           SIMPLE AUTO-TYPER - HOTKEY VERSION")
         print("=" * 60)
@@ -51,43 +55,27 @@ class SimpleAutoTyper:
         print(f"✅ Successfully typed {len(text)} characters!")
     
     def type_vietnamese_text(self, text):
-        """Type Vietnamese text using optimized clipboard method"""
-        # Store original clipboard
-        original_clipboard = ""
-        try:
-            original_clipboard = pyperclip.paste()
-        except:
-            pass
+        """Type Vietnamese text using pynput for proper Unicode support"""
+        if not PYNPUT_AVAILABLE:
+            print("⚠️  pynput not available, using fallback method...")
+            self.type_char_by_char(text)
+            return
+            
+        print("🌐 Using pynput for Vietnamese characters...")
         
         try:
-            # Break text into smaller chunks to simulate typing
-            words = text.split(' ')
-            for i, word in enumerate(words):
-                # Type each word using clipboard
-                pyperclip.copy(word)
-                time.sleep(0.05)  # Small delay to ensure clipboard is set
-                pyautogui.hotkey('ctrl', 'v')
-                
-                # Add space between words (except for last word)
-                if i < len(words) - 1:
-                    time.sleep(self.typing_speed)
-                    pyautogui.write(' ')
-                
-                # Delay between words to simulate typing speed
-                time.sleep(self.typing_speed * 3)  # Slightly longer delay between words
+            # Use pynput keyboard controller for Unicode support
+            kb_controller = KeyboardController()
+            
+            for char in text:
+                # pynput has excellent Unicode support
+                kb_controller.type(char)
+                time.sleep(self.typing_speed)
                 
         except Exception as e:
-            print(f"⚠️  Vietnamese typing failed: {e}")
+            print(f"⚠️  pynput typing failed: {e}")
             print("🔄 Falling back to basic method...")
             self.type_char_by_char(text)
-        
-        finally:
-            # Restore original clipboard
-            try:
-                time.sleep(0.1)
-                pyperclip.copy(original_clipboard)
-            except:
-                pass
     
     def type_char_by_char(self, text):
         """Type ASCII text character by character"""

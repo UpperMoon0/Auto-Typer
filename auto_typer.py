@@ -4,11 +4,12 @@ import keyboard
 import pyautogui
 from threading import Thread
 import sys
+import re
 
 class SimpleAutoTyper:
     def __init__(self):
         self.running = True
-        self.typing_speed = 0.05  # Default typing delay
+        self.typing_speed = 0.01  # Default typing delay
         print("=" * 60)
         print("           SIMPLE AUTO-TYPER - HOTKEY VERSION")
         print("=" * 60)
@@ -30,16 +31,57 @@ class SimpleAutoTyper:
             print(f"❌ Error getting clipboard: {e}")
             return None
     
+    def has_special_characters(self, text):
+        """Check if text contains special Unicode characters"""
+        # Check for any non-ASCII characters
+        return bool(re.search(r'[^\x00-\x7F]', text))
+    
     def type_text_slowly(self, text):
-        """Type text character by character with delay"""
+        """Type text with support for special characters"""
         print(f"✨ Typing {len(text)} characters...")
         
-        for char in text:
-            # Use pyautogui to type each character
-            pyautogui.write(char)
-            time.sleep(self.typing_speed)
+        # Check if text contains special characters
+        if self.has_special_characters(text):
+            print("🌐 Detected special characters, using clipboard method...")
+            self.type_with_clipboard(text)
+        else:
+            print("📝 Using character-by-character typing...")
+            self.type_char_by_char(text)
         
         print(f"✅ Successfully typed {len(text)} characters!")
+    
+    def type_with_clipboard(self, text):
+        """Type text using clipboard method for special characters"""
+        # Save current clipboard content
+        original_clipboard = pyperclip.paste()
+        
+        try:
+            # Put our text in clipboard
+            pyperclip.copy(text)
+            time.sleep(0.1)  # Small delay to ensure clipboard is set
+            
+            # Simulate Ctrl+V to paste
+            pyautogui.hotkey('ctrl', 'v')
+            
+        finally:
+            # Restore original clipboard content
+            time.sleep(0.1)
+            pyperclip.copy(original_clipboard)
+    
+    def type_char_by_char(self, text):
+        """Type text character by character for ASCII text"""
+        for char in text:
+            try:
+                # Use pyautogui to type each character
+                pyautogui.write(char)
+                time.sleep(self.typing_speed)
+            except Exception as e:
+                print(f"⚠️  Failed to type character '{char}': {e}")
+                # Fall back to clipboard method for this character
+                pyperclip.copy(char)
+                time.sleep(0.05)
+                pyautogui.hotkey('ctrl', 'v')
+                time.sleep(self.typing_speed)
     
     def change_speed(self):
         """Change typing speed interactively"""

@@ -9,7 +9,7 @@ import re
 class SimpleAutoTyper:
     def __init__(self):
         self.running = True
-        self.typing_speed = 0.01  # Default typing delay
+        self.typing_speed = 0.05  # Default typing delay
         print("=" * 60)
         print("           SIMPLE AUTO-TYPER - HOTKEY VERSION")
         print("=" * 60)
@@ -42,45 +42,61 @@ class SimpleAutoTyper:
         
         # Check if text contains special characters
         if self.has_special_characters(text):
-            print("🌐 Detected special characters, using clipboard method...")
-            self.type_with_clipboard(text)
+            print("🌐 Detected Vietnamese characters, using smart typing...")
+            self.type_vietnamese_text(text)
         else:
             print("📝 Using character-by-character typing...")
             self.type_char_by_char(text)
         
         print(f"✅ Successfully typed {len(text)} characters!")
     
-    def type_with_clipboard(self, text):
-        """Type text using clipboard method for special characters"""
-        # Save current clipboard content
-        original_clipboard = pyperclip.paste()
+    def type_vietnamese_text(self, text):
+        """Type Vietnamese text using optimized clipboard method"""
+        # Store original clipboard
+        original_clipboard = ""
+        try:
+            original_clipboard = pyperclip.paste()
+        except:
+            pass
         
         try:
-            # Put our text in clipboard
-            pyperclip.copy(text)
-            time.sleep(0.1)  # Small delay to ensure clipboard is set
-            
-            # Simulate Ctrl+V to paste
-            pyautogui.hotkey('ctrl', 'v')
-            
+            # Break text into smaller chunks to simulate typing
+            words = text.split(' ')
+            for i, word in enumerate(words):
+                # Type each word using clipboard
+                pyperclip.copy(word)
+                time.sleep(0.05)  # Small delay to ensure clipboard is set
+                pyautogui.hotkey('ctrl', 'v')
+                
+                # Add space between words (except for last word)
+                if i < len(words) - 1:
+                    time.sleep(self.typing_speed)
+                    pyautogui.write(' ')
+                
+                # Delay between words to simulate typing speed
+                time.sleep(self.typing_speed * 3)  # Slightly longer delay between words
+                
+        except Exception as e:
+            print(f"⚠️  Vietnamese typing failed: {e}")
+            print("🔄 Falling back to basic method...")
+            self.type_char_by_char(text)
+        
         finally:
-            # Restore original clipboard content
-            time.sleep(0.1)
-            pyperclip.copy(original_clipboard)
+            # Restore original clipboard
+            try:
+                time.sleep(0.1)
+                pyperclip.copy(original_clipboard)
+            except:
+                pass
     
     def type_char_by_char(self, text):
-        """Type text character by character for ASCII text"""
+        """Type ASCII text character by character"""
         for char in text:
             try:
-                # Use pyautogui to type each character
                 pyautogui.write(char)
                 time.sleep(self.typing_speed)
             except Exception as e:
                 print(f"⚠️  Failed to type character '{char}': {e}")
-                # Fall back to clipboard method for this character
-                pyperclip.copy(char)
-                time.sleep(0.05)
-                pyautogui.hotkey('ctrl', 'v')
                 time.sleep(self.typing_speed)
     
     def change_speed(self):

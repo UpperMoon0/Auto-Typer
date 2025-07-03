@@ -4,30 +4,22 @@ A professional Python application that types clipboard content into any input fi
 
 ## Features
 
-- **Global Hotkey**: Press `Shift + T` to type clipboard content anywhere
+- **Global Hotkey**: Activates typing of clipboard content
 - **Adjustable Speed**: Press `Shift + S` to change typing speed
 - **Universal Compatibility**: Works with any input field in any application or website
 - **Simple Operation**: No complex setup or field selection required
 - **Lightweight**: Uses minimal system resources
 
-## Quick Start
+## Usage
 
-### Standard Setup & Run
+### Quick Start
 1. Run [`setup.bat`](setup.bat) (first time only)
 2. Run [`run.bat`](run.bat) to start the application
 3. Copy text to clipboard
 4. Focus any input field
 5. Press **Shift + T** to type
 
-## Usage Instructions
-
-### Step-by-Step Process:
-1. **Start the application**: Run `py auto_typer.py` or use the batch files
-2. **Copy text**: Copy any text to your clipboard (Ctrl+C)
-3. **Focus input field**: Click on any input field (website, application, etc.)
-4. **Press Shift+T**: The application will type your clipboard content
-
-### Global Hotkeys:
+### Global Hotkeys
 - **Shift + T**: Type clipboard content into focused input field
 - **Shift + S**: Change typing speed (Very Fast, Fast, Normal, Slow, Custom)
 - **Shift + Q**: Quit the application
@@ -69,21 +61,7 @@ py auto_typer.py
 
 ## Use Cases
 
-### Ideal Applications:
-- **Password fields** that block paste functionality
-- **Form fields** with paste restrictions
-- **Text areas** that disable clipboard access
-- **Any input field** in any application
-- **Repetitive typing** tasks
-- **Long text** that needs to be entered manually
-
-### Compatible Environments:
-- Web browsers (Chrome, Firefox, Edge, Safari)
-- Desktop applications
-- Text editors and IDEs
-- Forms and surveys
-- Chat applications
-- Command line interfaces
+This auto-typer is ideal for bypassing paste restrictions in **password fields**, **form fields**, and **text areas**, as well as for **repetitive typing tasks** and entering **long texts** manually. It is compatible with various environments, including **web browsers** (Chrome, Firefox, Edge, Safari), **desktop applications**, **text editors and IDEs**, **forms and surveys**, **chat applications**, and **command line interfaces**.
 
 ## Troubleshooting
 
@@ -127,31 +105,17 @@ pip install -r requirements.txt
 5. Press Shift+T: Automated typing begins
 ```
 
-## Important Notes
+## Tips and Considerations
 
-- The application must run continuously in the background
-- Windows users may require administrator privileges for global hotkeys
-- Fail-safe is enabled: move mouse to top-left corner to stop typing
-- Keep the terminal/command window open while using the application
+- The application must run continuously in the background for hotkeys to function.
+- Windows users may require administrator privileges to enable global hotkeys.
+- A fail-safe is enabled: move your mouse to the top-left corner of the screen to immediately stop typing.
+- Keep the terminal/command window open while using the application.
+- **Test thoroughly**: Verify functionality with simple text before using with sensitive data.
+- **Speed optimization**: Use slower speeds for better application compatibility.
+- **Focus verification**: Ensure the input field is properly focused before pressing Shift+T.
 
-## Available Commands
 
-```bash
-# Start the application
-py auto_typer.py
-
-# Or use batch files
-run.bat          # Start with virtual environment  
-setup.bat        # First-time setup and installation
-```
-
-## Best Practices
-
-- **Test thoroughly**: Verify functionality with simple text before using with sensitive data
-- **Speed optimization**: Use slower speeds for better application compatibility
-- **Focus verification**: Ensure the input field is properly focused before pressing Shift+T
-- **Background operation**: Maintain application running for continuous hotkey functionality
-- **Administrator mode**: Run as administrator on Windows for optimal compatibility
 
 ---
 
